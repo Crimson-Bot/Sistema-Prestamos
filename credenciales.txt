@@ -1,0 +1,12 @@
+1
+Roberto
+Gerente
+Masculino
+LINK
+3000
+2
+Luisa
+Empleado
+Femenino
+ZELDA
+1234

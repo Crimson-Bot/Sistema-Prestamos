@@ -1,0 +1,21 @@
+#d{
+    width: 100%;
+}
+
+#btnBuscar{
+    width: 20%;
+    margin-left: 5px;
+}
+
+.prestamo{
+    display: flex;
+}
+
+.select{
+    display: flex;
+}
+
+#op{
+    margin-left: 2rem;
+
+}
