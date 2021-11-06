@@ -58,8 +58,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="charts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
+                    <img src="https://img.icons8.com/color/48/000000/graph.png"/>
                     <span>Graficas</span></a>
             </li>
 

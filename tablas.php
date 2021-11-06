@@ -1,4 +1,4 @@
-<?php global $nombreUsuario, $idUsuario, $nombre, $tipo, $sexo, $foto, $fotoUsuario;
+<?php global $nombreUsuario, $idUsuario, $tipoUsuario, $sexoUsuario, $fotoUsuario, $salarioUsuario;
 // $idUsuario = 2;
 global $contTemp;
 $contTemp = 0;
@@ -16,7 +16,10 @@ if ($idUsuario != 0) {
             $salario = fgets($leer);
             if ($idUsuario == $claveid) {
                 $nombreUsuario = $nombre;
+                $tipoUsuario = $tipo;
+                $sexoUsuario = $sexo;
                 $fotoUsuario = $foto;
+                $salarioUsuario = $salario;
             }
         }
         fclose($leer);
@@ -72,7 +75,7 @@ if ($idUsuario != 0) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="dashboardEmpleado.php">
+                <a class="nav-link" href="<?php echo "dashboardEmpleado.php?id=".$idUsuario." " ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Menu</span></a>
             </li>
@@ -154,26 +157,7 @@ if ($idUsuario != 0) {
                                     src="./imagenes/1.png">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
+
                         </li>
 
                     </ul>
@@ -189,7 +173,7 @@ if ($idUsuario != 0) {
                         <button class="btn btn-primary" id="btnCrearPdf">Generar reporte</button>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModalSolicitarPrestamo"> + Solicitar prestamo
                         </button>
-                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar datos</button>
+                        <!-- <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar datos</button> -->
                         <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalAgregarPago">+ Agregar pago de quincena</button>
                     </div>
                 </div>
@@ -204,10 +188,10 @@ if ($idUsuario != 0) {
                             <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Quincenas a pagar</th>
-                            <th scope="col">Quincenas restantes</th>
                             <th scope="col">Cantidad a pagar</th>
-                            <th scope="col">Cantidad debida</th>
+                            <th scope="col">Quincenas a pagar</th>
+                            <th scope="col">Cantidad restante</th>
+                            <th scope="col">Quincenas restantes</th>
                             </tr>
                         </thead>
 
@@ -222,10 +206,11 @@ echo '
                         <thead>
                             <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad debida</th>
+                            <th scope="col">Cantidad a pagar</th>
                             <th scope="col">Quincenas a pagar</th>
                             <th scope="col">Quincenas restantes</th>
-                            <th scope="col">Cantidad a pagar</th>
-                            <th scope="col">Cantidad debida</th>
+
                             </tr>
                         </thead> -->
 
@@ -235,34 +220,37 @@ echo '
 ';
 // echo '
 // contenedor-tabla.innerHTM""tr>';
+global $array;
 $array = array();
+global $idArreglo, $nombreArreglo, $totalPrestamoArreglo, $quincenasTotalesArreglo, $cantidadRestanteArreglo;
 // Implementar ARRAYLIST PARA GUARDADO DE
 // LOS 2 ARCHIVOS Y VACIARLO EN LA TABLA.
 while (!feof($mostrar)) {
     $id = fgets($mostrar);
     if ($id == $idUsuario) {
-        $nombre = fgets($mostrar);
-        $totalPrestamo = fgets($mostrar);
-        $quincenasTotales = fgets($mostrar);
-        $array[$contTemp] = $id;
-        $contTemp += 1;
-        $array[$contTemp] = $nombre;
-        $contTemp += 1;
-        $array[$contTemp] = $quincenasTotales;
-        $contTemp += 1;
-        $array[$contTemp] = $totalPrestamo;
-
-        echo '<tr>
-        <tr>
-        <td>' . $array[0] . '</td>
-        <td>' . $array[1] . '</td>
-        <td>' . $quincenasTotales . '</td>
-        <td>Falta</td>
-        <td>' . $totalPrestamo . '</td>
-        <td>Faltante</td>
-        ';
+        $idArreglo = $id; //id del usuario
+        $nombreArreglo = fgets($mostrar); //nombre
+        $totalPrestamoArreglo = fgets($mostrar); //cantidad a pagar
+        $quincenasTotalesArreglo = fgets($mostrar); //Quincenas a pagar
+        array_push($array,$idArreglo);
+        array_push($array,$nombreArreglo);
+        array_push($array,$totalPrestamoArreglo);
+        array_push($array,$quincenasTotalesArreglo);
     }
 }
+
+    // echo '<tr>
+    // <tr>
+    // <td>'.$array[0] . '</td>
+    // <td>'.$array[1] . '</td>
+    // <td>'.$array[2].'</td>
+    // <td>'.$array[3].'</td>
+    // <td>"fALTA"</td>
+    // <td>Faltante</td>
+    // ';
+
+
+
 ?>
 
                 <div class="container-fluid" id="i">
@@ -313,7 +301,7 @@ while (!feof($mostrar)) {
 
 
                 <!-- Inicio del modal EDITAR DATOS -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
@@ -336,6 +324,18 @@ while (!feof($mostrar)) {
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Foto:</label>
                                 <input type="text" class="form-control" name="fotoEditado" id="fotoEditado" placeholder="Url" value="<?php echo $fotoUsuario; ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="tipoEditado" id="tipoEditado" value="<?php echo $tipoUsuario; ?>" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="sexoEditado" id="sexoEditado" value="<?php echo $sexoUsuario; ?>" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="salarioEditado" id="salarioEditado" value="<?php echo $salarioUsuario; ?>" readonly>
                             </div>
                     </div>
                     <div class="modal-footer">
