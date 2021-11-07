@@ -35,7 +35,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Iniciar sesion</h1>
                                     </div>
-                                    <form class="user" method="GET" action="validarLogin.php" onSubmit="return valida()">
+                                    <form class="user" method="GET" action="validarLogin.php">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="username" placeholder="Usuario" name="user">
