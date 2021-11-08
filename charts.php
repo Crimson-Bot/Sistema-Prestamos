@@ -59,6 +59,8 @@
             </li>
 
 
+
+
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.php">
@@ -70,7 +72,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="tablasAdmin.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tablas</span></a>
             </li>
@@ -121,21 +123,21 @@
         <!-- End of Sidebar -->
 
 <?php
-$dataPoints = array( 
-	array("y" => 15, "label" => "Enero" ),
-	array("y" => 24, "label" => "Febrero" ),
-	array("y" => 30, "label" => "Marzo" ),
-	array("y" => 15, "label" => "Abril" ),
-	array("y" => 5, "label" => "Mayo" ),
-	array("y" => 8, "label" => "Junio" ),
-	array("y" => 4, "label" => "Julio" ),
-    array("y" => 3, "label" => "Agosto" ),
-    array("y" => 9, "label" => "Septiembre" ),
-    array("y" => 7, "label" => "Octubre" ),
-    array("y" => 21, "label" => "Noviembre" ),
-    array("y" => 87, "label" => "Diciembre" )
+$dataPoints = array(
+    array("y" => 15, "label" => "Enero"),
+    array("y" => 24, "label" => "Febrero"),
+    array("y" => 30, "label" => "Marzo"),
+    array("y" => 15, "label" => "Abril"),
+    array("y" => 5, "label" => "Mayo"),
+    array("y" => 8, "label" => "Junio"),
+    array("y" => 4, "label" => "Julio"),
+    array("y" => 3, "label" => "Agosto"),
+    array("y" => 9, "label" => "Septiembre"),
+    array("y" => 7, "label" => "Octubre"),
+    array("y" => 21, "label" => "Noviembre"),
+    array("y" => 87, "label" => "Diciembre"),
 );
- 
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -166,7 +168,7 @@ $dataPoints = array(
     <div id="content-wrapper" class="d-flex flex-column">
             <script>
                 window.onload = function() {
-                
+
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
                     theme: "lithg1",

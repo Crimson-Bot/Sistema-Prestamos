@@ -1,5 +1,4 @@
 <?php global $nombreUsuario, $idUsuario, $tipoUsuario, $sexoUsuario, $fotoUsuario, $salarioUsuario;
-// $idUsuario = 2;
 global $contTemp;
 $contTemp = 0;
 $idUsuario = $_GET['id'];
@@ -219,13 +218,55 @@ while (!feof($mostrar2)) {
 
         echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . $restaQuincenas . "</td></tr>";
 
-        if ($totalPrestamo == 0) {
-            // Eliminar prestamo aquí
-        }
+        // if ($totalPrestamo == 0) {
+        //     // Eliminar prestamo aquí
+        //     $leer = fopen("pagos.txt", "r");
+        //     $escribir = fopen("temporal.txt", "a+");
+        //     while (!feof($leer)) {
+        //         $idClave = fgets($leer);
+        //         $nombreClave = fgets($leer);
+        //         $monto = fgets($leer);
+        //         if ($idUsuario != $idClave) {
+        //             fputs($escribir, $idClave);
+        //             fputs($escribir, $nombreClave);
+        //             fputs($escribir, $monto);
+        //         }
+        //     }
+        //     fclose($leer);
+        //     fclose($escribir);
+        //     if (rename("temporal.txt", "pagos.txt")) {
+
+        //         echo "<script>alert('Datos Eliminados Exitosamente!!!');</script>";
+        //         echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=tablas.php?id='. $idUsuario.'  '>";
+        //         break;
+        //     }
+        // }
     }
 }
 fclose($mostrar2);
 echo "</tbody></table>";
+if ($totalPrestamo == 0) {
+    // Eliminar prestamo aquí
+    $leer = fopen("pagos.txt", "r");
+    $escribir = fopen("temporal.txt", "a+");
+    while (!feof($leer)) {
+        $idClave = fgets($leer);
+        $nombreClave = fgets($leer);
+        $monto = fgets($leer);
+        if ($idUsuario != $idClave) {
+            fputs($escribir, $idClave);
+            fputs($escribir, $nombreClave);
+            fputs($escribir, $monto);
+        }
+    }
+    fclose($leer);
+    fclose($escribir);
+    if (rename("temporal.txt", "pagos.txt")) {
+        echo "<script>alert('Datos Eliminados Exitosamente!!!');</script>";
+        echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php '>";
+        // break;
+    }
+}
 ?>
 
                 <div class="container-fluid" id="i">
