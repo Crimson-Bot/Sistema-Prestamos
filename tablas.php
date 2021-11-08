@@ -231,6 +231,20 @@ if ($totalPrestamo == 0) {
     // Eliminar prestamo aquí
     $leer = fopen("pagos.txt", "r");
     $escribir = fopen("temporal.txt", "a+");
+    $validar = fopen("prestamos.txt", "r");
+    $barrido = fopen("temp.txt", "a+");
+    // prestamos
+    while (!feof($validar)) {
+        $idP = fgets($validar);
+        $nombreP = fgets($validar);
+        $montoP = fgets($validar);
+        if ($idUsuario != $idP) {
+            fputs($barrido, $idClaveP);
+            fputs($barrido, $nombreClaveP);
+            fputs($barrido, $montoP);
+        }
+    }
+    // pagos
     while (!feof($leer)) {
         $idClave = fgets($leer);
         $nombreClave = fgets($leer);
@@ -243,10 +257,11 @@ if ($totalPrestamo == 0) {
     }
     fclose($leer);
     fclose($escribir);
-    if (rename("temporal.txt", "pagos.txt")) {
+    fclose($validar);
+    fclose($barrido);
+    if (rename("temporal.txt", "pagos.txt") && rename("temp.txt", "prestamos.txt")) {
         echo "<script>alert('Datos Eliminados Exitosamente!!!');</script>";
         echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php '>";
-        // break;
     }
 }
 ?>
