@@ -1,6 +1,12 @@
 1
 Roberto
-Gerente
+GERENTE
 Masculino
-EDITADO 2
-4565
+LINK
+6666
+2
+Luisa
+Empleado
+Femenino
+ZELDA
+3000

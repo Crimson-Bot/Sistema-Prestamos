@@ -75,7 +75,7 @@ if ($idUsuario != 0) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo "dashboardEmpleado.php?id=".$idUsuario." " ?>">
+                <a class="nav-link" href="<?php echo "dashboardEmpleado.php?id=" . $idUsuario . " " ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Menu</span></a>
             </li>
@@ -91,7 +91,7 @@ if ($idUsuario != 0) {
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="login.php">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Log out</span></a>
             </li>
@@ -183,7 +183,7 @@ if ($idUsuario != 0) {
                 <div class="container-fluid" id="i">
                     <h1>Reporte de prestamo</h1>
                     <!-- Colocar tabla aquí -->
-                    <table class="table">
+                    <!-- <table class="table">
                         <thead>
                             <tr>
                             <th scope="col">ID</th>
@@ -193,64 +193,25 @@ if ($idUsuario != 0) {
                             <th scope="col">Cantidad restante</th>
                             <th scope="col">Quincenas restantes</th>
                             </tr>
-                        </thead>
+                        </thead> -->
 
                     <!-- Abrir archivo de deudas aquí -->
 <?php
-$mostrar = fopen('prestamos.txt', 'r');
-echo '
-<div class="container-fluid" id="i">
-                    <!-- <h1>Reporte de prestamo</h1> -->
-                    <!-- Colocar tabla aquí -->
-                    <!-- <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Cantidad debida</th>
-                            <th scope="col">Cantidad a pagar</th>
-                            <th scope="col">Quincenas a pagar</th>
-                            <th scope="col">Quincenas restantes</th>
-
-                            </tr>
-                        </thead> -->
-
-                        <tbody = id="contenedor-tabla">
-                        </tbody>
-
-';
-// echo '
-// contenedor-tabla.innerHTM""tr>';
-global $array;
-$array = array();
-global $idArreglo, $nombreArreglo, $totalPrestamoArreglo, $quincenasTotalesArreglo, $cantidadRestanteArreglo;
-// Implementar ARRAYLIST PARA GUARDADO DE
-// LOS 2 ARCHIVOS Y VACIARLO EN LA TABLA.
+echo "<table border> <tr> <th>ID</th> <th>Nombre</th> <th>Tipo</th> <th>Sexo</th> <th>Foto</th> <th>Salario</th> </tr>";
+$mostrar = fopen('credenciales.txt', 'r');
 while (!feof($mostrar)) {
     $id = fgets($mostrar);
+    $nombre = fgets($mostrar);
+    $tipo = fgets($mostrar);
+    $sexo = fgets($mostrar);
+    $foto = fgets($mostrar);
+    $salario = fgets($mostrar);
     if ($id == $idUsuario) {
-        $idArreglo = $id; //id del usuario
-        $nombreArreglo = fgets($mostrar); //nombre
-        $totalPrestamoArreglo = fgets($mostrar); //cantidad a pagar
-        $quincenasTotalesArreglo = fgets($mostrar); //Quincenas a pagar
-        array_push($array,$idArreglo);
-        array_push($array,$nombreArreglo);
-        array_push($array,$totalPrestamoArreglo);
-        array_push($array,$quincenasTotalesArreglo);
+        echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $tipo . "</td><td>" . $sexo . "</td></tr>";
     }
 }
-
-    // echo '<tr>
-    // <tr>
-    // <td>'.$array[0] . '</td>
-    // <td>'.$array[1] . '</td>
-    // <td>'.$array[2].'</td>
-    // <td>'.$array[3].'</td>
-    // <td>"fALTA"</td>
-    // <td>Faltante</td>
-    // ';
-
-
-
+fclose($mostrar);
+echo "</table>";
 ?>
 
                 <div class="container-fluid" id="i">

@@ -70,7 +70,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tablasAdmin.php">
+                <a class="nav-link">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tablas</span></a>
             </li>
@@ -267,16 +267,27 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Bienvenido al sistema</h1>
-                        <?php
-date_default_timezone_set('America/Mexico_City');
-$DateAndTime = date('m-d-Y h:i:s a', time());
-echo "<h2>" . $DateAndTime . "</h2>";
-?>
+                        <h1 class="h3 mb-0 text-gray-800">Datos de los Empleados</h1>
                     </div>
-
-                    <img aling="center" src="./imagenes/2.png" alt="">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <center>
+<?php
+echo "<table border> <tr> <th>ID</th> <th>Nombre</th> <th>Tipo</th> <th>Sexo</th> <th>Foto</th> <th>Salario</th> </tr>";
+$mostrar = fopen('credenciales.txt', 'r');
+while (!feof($mostrar)) {
+    $id = fgets($mostrar);
+    $nombre = fgets($mostrar);
+    $tipo = fgets($mostrar);
+    $sexo = fgets($mostrar);
+    $foto = fgets($mostrar);
+    $salario = fgets($mostrar);
+    if ($id != "") {
+        echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $tipo . "</td><td>" . $sexo . "</td><td>" . $foto . "</td><td>" . $salario . "</td></tr>";
+    }
+}
+fclose($mostrar);
+echo "</table>";
+?>
+                    </center>
 
                     </div>
                 </div>
@@ -286,13 +297,13 @@ echo "<h2>" . $DateAndTime . "</h2>";
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Sistema de Prestamos 2021</span>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
