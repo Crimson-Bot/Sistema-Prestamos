@@ -211,36 +211,18 @@ $restaQuincenas = $totalQuincenas;
 while (!feof($mostrar2)) {
     $id = fgets($mostrar2);
     if ($id == $idUsuario) {
+
         $nombre = fgets($mostrar2);
         $restaPrestamos = fgets($mostrar2);
         $totalPrestamo = $totalPrestamo - $restaPrestamos;
         $restaQuincenas = $restaQuincenas - 1;
+        if ($restaQuincenas < 0) {
+            echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . 'RETRASO' . "</td></tr>";
+        } else {
 
-        echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . $restaQuincenas . "</td></tr>";
+            echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . $restaQuincenas . "</td></tr>";
+        }
 
-        // if ($totalPrestamo == 0) {
-        //     // Eliminar prestamo aquí
-        //     $leer = fopen("pagos.txt", "r");
-        //     $escribir = fopen("temporal.txt", "a+");
-        //     while (!feof($leer)) {
-        //         $idClave = fgets($leer);
-        //         $nombreClave = fgets($leer);
-        //         $monto = fgets($leer);
-        //         if ($idUsuario != $idClave) {
-        //             fputs($escribir, $idClave);
-        //             fputs($escribir, $nombreClave);
-        //             fputs($escribir, $monto);
-        //         }
-        //     }
-        //     fclose($leer);
-        //     fclose($escribir);
-        //     if (rename("temporal.txt", "pagos.txt")) {
-
-        //         echo "<script>alert('Datos Eliminados Exitosamente!!!');</script>";
-        //         echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=tablas.php?id='. $idUsuario.'  '>";
-        //         break;
-        //     }
-        // }
     }
 }
 fclose($mostrar2);
