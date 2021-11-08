@@ -183,80 +183,53 @@ if ($idUsuario != 0) {
                 <div class="container-fluid" id="i">
                     <h1>Reporte de prestamo</h1>
                     <!-- Colocar tabla aquí -->
-                    <!-- <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Cantidad a pagar</th>
-                            <th scope="col">Quincenas a pagar</th>
-                            <th scope="col">Cantidad restante</th>
-                            <th scope="col">Quincenas restantes</th>
-                            </tr>
-                        </thead> -->
 
                     <!-- Abrir archivo de deudas aquí -->
 <?php
-echo "<table border> <tr> <th>ID</th> <th>Nombre</th> <th>Tipo</th> <th>Sexo</th> <th>Foto</th> <th>Salario</th> </tr>";
-$mostrar = fopen('credenciales.txt', 'r');
+echo "<table border class='table'> <tr>
+<th scope='col'>ID</th>
+<th scope='col'>Nombre</th>
+<th scope='col'>Quincenas Totales</th>
+<th scope='col'>Monto Total</th>
+  </tr>
+  <tbody>";
+$mostrar = fopen('prestamos.txt', 'r');
+global $totalPrestamo, $totalQuincenas;
 while (!feof($mostrar)) {
     $id = fgets($mostrar);
-    $nombre = fgets($mostrar);
-    $tipo = fgets($mostrar);
-    $sexo = fgets($mostrar);
-    $foto = fgets($mostrar);
-    $salario = fgets($mostrar);
     if ($id == $idUsuario) {
-        echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $tipo . "</td><td>" . $sexo . "</td></tr>";
+        $nombre = fgets($mostrar);
+        $totalPrestamo = fgets($mostrar);
+        $totalQuincenas = fgets($mostrar);
     }
 }
 fclose($mostrar);
-echo "</table>";
+// tabla 2
+$mostrar2 = fopen('pagos.txt', 'r');
+global $restaPrestamos, $restaQuincenas, $temp;
+$temp = $totalQuincenas;
+$restaQuincenas = $totalQuincenas;
+while (!feof($mostrar2)) {
+    $id = fgets($mostrar2);
+    if ($id == $idUsuario) {
+        $nombre = fgets($mostrar2);
+        $restaPrestamos = fgets($mostrar2);
+        $totalPrestamo = $totalPrestamo - $restaPrestamos;
+        $restaQuincenas = $restaQuincenas - 1;
+
+        echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . $restaQuincenas . "</td></tr>";
+
+        if ($totalPrestamo == 0) {
+            // Eliminar prestamo aquí
+        }
+    }
+}
+fclose($mostrar2);
+echo "</tbody></table>";
 ?>
 
                 <div class="container-fluid" id="i">
-                    <!-- <h1>Reporte de prestamo</h1> -->
-                    <!-- Colocar tabla aquí -->
-                    <!-- <table class="table">
 
- --><!--
-                <div class="container-fluid" id="i">
-                     <h1>Reporte de prestamo</h1> -->
-                    <!-- Colocar tabla aquí -->
-                    <!-- <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Quincenas a pagar</th>
-                            <th scope="col">Quincenas restantes</th>
-                            <th scope="col">Cantidad a pagar</th>
-                            <th scope="col">Cantidad debida</th>
-                            </tr>
-                        </thead> -->
-                        <!-- <tbody>
-                            <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>$45657</td>
-                            <td>$5000</td>
-                            </tr>
-                            <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>$45657</td>
-                            <td>$5000</td>
-                            </tr>
-                            <tr>
-                            <td >Larry the Bird</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>$45657</td>
-                            <td>$5000</td>
-                            </tr>
-                        </tbody>
-                        </table> -->
                 </div>
                 <!-- Tabla fin -->
 
