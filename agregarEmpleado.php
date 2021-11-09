@@ -65,13 +65,20 @@
             </li>
 
             <!-- Nav Item - Tables -->
+            <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="tablasAdmin.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tablas</span></a>
             </li>
 
-            
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Log out</span></a>
+            </li>
+
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -121,7 +128,7 @@
                             </div>
                         </li>
 
-                       
+
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -203,7 +210,7 @@
                             </div>
                         </div>
                         <input type="submit" value="Registrar Empleado" class="btn btn-primary btn-user btn-block">
-                        
+
                     </form>
                 </div>
                 <!-- /.container-fluid -->

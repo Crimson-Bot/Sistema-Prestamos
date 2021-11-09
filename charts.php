@@ -45,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link">
+                <a class="nav-link" href="dasboardAdmin.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Menu</span></a>
             </li>
@@ -75,6 +75,11 @@
                 <a class="nav-link" href="tablasAdmin.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tablas</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Log out</span></a>
             </li>
 
 
@@ -123,19 +128,76 @@
         <!-- End of Sidebar -->
 
 <?php
+$contE = 0;
+$contF = 0;
+$contMar = 0;
+$contA = 0;
+$contMy = 0;
+$contJn = 0;
+$contJl = 0;
+$contAgos = 0;
+$contS = 0;
+$contO = 0;
+$contN = 0;
+$contD = 0;
+$mostrar = fopen('prestamos.txt', 'r');
+while (!feof($mostrar)) {
+    $id = fgets($mostrar);
+    $nombre = fgets($mostrar);
+    $prestamo = fgets($mostrar);
+    $quincena = fgets($mostrar);
+    $mes = fgets($mostrar);
+    if ($id = !"") {
+        if ($mes == 1) {
+            $contE++;
+        }
+        if ($mes == 2) {
+            $contF++;
+        }
+        if ($mes == 3) {
+            $contMar++;
+        }
+        if ($mes == 4) {
+            $contA++;
+        }
+        if ($mes == 5) {
+            $contMy++;
+        }
+        if ($mes == 6) {
+            $contJn++;
+        }
+        if ($mes == 7) {
+            $contJl++;
+        }
+        if ($mes == 8) {
+            $contAgos++;
+        }if ($mes == 9) {
+            $contS++;
+        }if ($mes == 10) {
+            $contO++;
+        }if ($mes == 11) {
+            $contN++;
+        }if ($mes == 12) {
+            $contD++;
+        }
+    }
+}
+fclose($mostrar);
+$arrayMeses = array($contE, $contF, $contMar, $contA, $contMy, $contJn, $contJl, $contAgos, $contS, $contO, $contN, $contD);
+
 $dataPoints = array(
-    array("y" => 15, "label" => "Enero"),
-    array("y" => 24, "label" => "Febrero"),
-    array("y" => 30, "label" => "Marzo"),
-    array("y" => 15, "label" => "Abril"),
-    array("y" => 5, "label" => "Mayo"),
-    array("y" => 8, "label" => "Junio"),
-    array("y" => 4, "label" => "Julio"),
-    array("y" => 3, "label" => "Agosto"),
-    array("y" => 9, "label" => "Septiembre"),
-    array("y" => 7, "label" => "Octubre"),
-    array("y" => 21, "label" => "Noviembre"),
-    array("y" => 87, "label" => "Diciembre"),
+    array("y" => $arrayMeses[0], "label" => "Enero"),
+    array("y" => $arrayMeses[1], "label" => "Febrero"),
+    array("y" => $arrayMeses[2], "label" => "Marzo"),
+    array("y" => $arrayMeses[3], "label" => "Abril"),
+    array("y" => $arrayMeses[4], "label" => "Mayo"),
+    array("y" => $arrayMeses[5], "label" => "Junio"),
+    array("y" => $arrayMeses[6], "label" => "Julio"),
+    array("y" => $arrayMeses[7], "label" => "Agosto"),
+    array("y" => $arrayMeses[8], "label" => "Septiembre"),
+    array("y" => $arrayMeses[9], "label" => "Octubre"),
+    array("y" => $arrayMeses[10], "label" => "Noviembre"),
+    array("y" => $arrayMeses[11], "label" => "Diciembre"),
 );
 
 ?>
@@ -180,7 +242,7 @@ $dataPoints = array(
                     },
                     data: [{
                         type: "column",
-                        yValueFormatString: "#,##0.## prestamoss",
+                        yValueFormatString: "#,##0.## prestamos",
                         dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
                     }]
                 });

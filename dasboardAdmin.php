@@ -88,6 +88,12 @@
                         </button>
             </li>
 
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Log out</span></a>
+            </li>
+
 
                             <!-- Inicio del modal ELIMINAR DATOS -->
                             <div class="modal fade" id="eliminarEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -194,6 +194,7 @@ echo "<table border class='table'> <tr>
   <tbody>";
 $mostrar = fopen('prestamos.txt', 'r');
 global $totalPrestamo, $totalQuincenas;
+$totalPrestamo = $totalPrestamo - 1;
 while (!feof($mostrar)) {
     $id = fgets($mostrar);
     if ($id == $idUsuario) {

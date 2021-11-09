@@ -4,7 +4,7 @@ $nombre = $_GET['nombrePrestamo'];
 $cantidadPrestamo = $_GET['cantidadPrestamo'];
 $plazo = $_GET['plazo'];
 date_default_timezone_set('America/Mexico_City');
-$dateAndTime = date('m-d-Y h:i:s a', time());
+$dateAndTime = date("n");
 
 $ruta = "credenciales.txt";
 if (file_exists($ruta)) {

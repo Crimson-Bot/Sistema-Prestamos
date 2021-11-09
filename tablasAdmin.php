@@ -45,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link">
+                <a class="nav-link" href="dasboardAdmin.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Menu</span></a>
             </li>
@@ -82,11 +82,18 @@
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEmpleado"> Eliminar usuario
                         </button>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Log out</span></a>
+            </li>
 
             <li class="nav-item">
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar"> Editar Usuario
                         </button>
             </li>
+
+
 
 
                             <!-- Inicio del modal ELIMINAR DATOS -->
@@ -271,7 +278,13 @@
                     </div>
                     <center>
 <?php
-echo "<table border> <tr> <th>ID</th> <th>Nombre</th> <th>Tipo</th> <th>Sexo</th> <th>Foto</th> <th>Salario</th> </tr>";
+echo "<table border class='table'><tr>
+<th scope='col'>ID</th>
+<th scope='col'>Nombre</th>
+<th scope='col'>Tipo</th>
+<th scope='col'>Sexo</th>
+<th scope='col'>Foto</th>
+<th scope='col'>Salario</th> </tr>";
 $mostrar = fopen('credenciales.txt', 'r');
 while (!feof($mostrar)) {
     $id = fgets($mostrar);

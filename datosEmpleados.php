@@ -13,7 +13,8 @@ if (file_exists($ruta)) {
     while (!feof($leer)) {
         $claveid = fgets($leer);
         if ($id == $claveid) {
-            echo "ERROR.....ya existe un registro con ese ID<br>";
+            echo "<script>alert('ERROR... Ya existe un usuario con ese ID!!!');</script>";
+            echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=agregarEmpleado.php'>";
             $flag = false;
             break;
         }
@@ -31,6 +32,8 @@ if (file_exists($ruta)) {
         fputs($fileSave, $foto . "\n");
         fputs($fileSave, $salario . "\n");
         fclose($fileSave);
+        echo "<script>alert('Datos Guardados Correctamente!!!');</script>";
+        echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=agregarEmpleado.php'>";
     }
 } else {
     // Escribir en el archivo
@@ -43,5 +46,7 @@ if (file_exists($ruta)) {
     fputs($fileSave, $foto . "\n");
     fputs($fileSave, $salario . "\n");
     fclose($fileSave);
+    echo "<script>alert('Datos Guardados Correctamente!!!');</script>";
+    echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=agregarEmpleado.php'>";
 
 }
