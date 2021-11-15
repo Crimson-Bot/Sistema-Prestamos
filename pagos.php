@@ -1,17 +1,17 @@
 <?php
+include_once 'conexion.php';
+
 $idUsuario = $_GET['idPago'];
 $nombreUsuario = $_GET['nombrePago'];
 $abonoPago = $_GET['abonoPago'];
 
-$ruta = "pagos.txt";
-// Escribir en el archivo
-$fileSave = fopen("pagos.txt", "a");
-// Capturamos en el archivo
-fputs($fileSave, $idUsuario . "\n");
-fputs($fileSave, $nombreUsuario . "\n");
-fputs($fileSave, $abonoPago . "\n");
-fclose($fileSave);
-echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=tablas.php?id=" . $idUsuario . "'>";
+$consulta_insert = $con->prepare('INSERT INTO pagos(id,nombre,abono) VALUES(:id,:nombre,:abono)');
+        $consulta_insert->execute(array(
+            ':id' => $idUsuario,
+            ':nombre' => $nombreUsuario,
+            ':abono' => $abonoPago,
+        ));
+        header('Location: tablas.php');
 
 // Leer el archivo que se guardo pagos.
 // Crear un nuevo archivo llamado que es un conjunto de pagos y de prestamos "reporte"

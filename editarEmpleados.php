@@ -1,53 +1,81 @@
 <?php
-$idEmpleado = $_GET['idEditado'];
-$nombreEmpleado = $_GET['nombreEditado'];
-$tipoEmpleado = $_GET['tipoEditado'];
-$sexoEmpleado = $_GET['sexoEditado'];
-$fotoEmpleado = $_GET['fotoEditado'];
-$salarioEmpleado = $_GET['salarioEditado'];
+include_once 'conexion.php';
+if(isset($_GET['id'])){
+    $id=(int) $_GET['id'];
 
-// ------------------------------------------------------------------------------------------------------------
-$validar = fopen("prestamos.txt", "r");
-while (!feof($validar)) {
-    $claveId = fgets($validar);
-    if ($idEmpleado == $claveId) {
-        echo "<script>alert('ERROR... los datos no se pueden editar con un prestamo pendiente!!!');</script>";
-        echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=dasboardAdmin.php'>";
-        break;
-    } else {
-        $leer = fopen("credenciales.txt", "r");
-        $escribir = fopen("temp.txt", "a+");
-        while (!feof($leer)) {
-            $id = fgets($leer);
-            $nombre = fgets($leer);
-            $tipo = fgets($leer);
-            $sexo = fgets($leer);
-            $foto = fgets($leer);
-            $salario = fgets($leer);
-            if ($idEmpleado != $id) {
-                fputs($escribir, $id);
-                fputs($escribir, $nombre);
-                fputs($escribir, $tipo);
-                fputs($escribir, $sexo);
-                fputs($escribir, $foto);
-                fputs($escribir, $salario);
-            } else {
-                // Capturamos en el archivo
-                fputs($escribir, $idEmpleado . "\n");
-                fputs($escribir, $nombreEmpleado . "\n");
-                fputs($escribir, $tipoEmpleado . "\n");
-                fputs($escribir, $sexoEmpleado . "\n");
-                fputs($escribir, $fotoEmpleado . "\n");
-                fputs($escribir, $salarioEmpleado . "\n");
-            }
-        }
+    $buscar_id=$con->prepare('SELECT * FROM empleados WHERE id=:id LIMIT 1');
+    $buscar_id->execute(array(
+        ':id'=>$id
+    ));
+    $resultado=$buscar_id->fetch();
+}else{
+    header('Location: tablasAdmin.php');
+}
 
-        fclose($leer);
-        fclose($escribir);
-        if (rename("temp.txt", "credenciales.txt")) {
-            echo "<script>alert('Datos Editados Exitosamente!!!');</script>";
-            echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=dasboardAdmin.php'>";
-            break;
-        }
+if(isset($_POST['guardar'])){
+    $nombre=$_POST['nombre'];
+    $tipo=$_POST['tipo'];
+    $sexo=$_POST['sexo'];
+    $foto=$_POST['foto'];
+    $salario=$_POST['salario'];
+
+    if(!empty($nombre) && !empty($tipo) && !empty($sexo) && !empty($foto) && !empty($salario)){
+        
+            $consulta_update=$con->prepare('UPDATE empleados set 
+            nombre =:nombre,
+            tipo=:tipo,
+            sexo=:sexo,
+            foto=:foto,
+            salario=:salario WHERE id=:id');
+            $consulta_update->execute(array(
+                ':nombre' => $nombre,
+                ':tipo' => $tipo,
+                ':sexo' => $sexo,
+                ':foto' => $foto,
+                ':salario' => $salario,
+                ':id'=> $id
+            ));
+            header('Location: tablasAdmin.php');
+
+    }else{
+        echo '<script> alert("Los campos estan vacios")</script>';
     }
 }
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Empleado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="contenedor">
+    <h2>CRUD EN PHP CON MYSQL</h2>
+    <form action="" method="post">
+        <div class="form-group">
+            <input type="text" name="nombre" value="<?php if($resultado) echo $resultado['nombre'];?>" class="input__text">
+            <input type="text" name="tipo" value="<?php if($resultado) echo $resultado['tipo'];?>"class="input__text">
+        </div>
+        <div class="form-group">
+            <input type="text" name="sexo" value="<?php if($resultado) echo $resultado['sexo'];?>" class="input__text">
+            <input type="text" name="foto" value="<?php if($resultado) echo $resultado['foto'];?>" class="input__text">
+        </div>
+        <div class="form-group">
+            <input type="text" name="salario" value="<?php if($resultado) echo $resultado['salario'];?>" class="input__text">
+        </div>
+
+        <div class="btn__group">
+            <a href="tablasAdmin.php" class ="btn btn_danger">Cancelar</a>
+            <input type="submit" name="guardar" value="Guardar" class="btn btn_primary">
+        </div>
+    
+    </form>
+</div>
+    
+</body>
+</html>

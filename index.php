@@ -1,3 +1,27 @@
+<?php
+session_start();
+include_once 'conexion.php';
+if (isset($_POST['guardar'])) {
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+
+    if (!empty($user) && !empty($pass)) {
+        $sentencia_select = $con->prepare('SELECT * FROM empleados ORDER BY id ASC');
+        $sentencia_select->execute();
+        $resultado = $sentencia_select->fetchAll();
+        foreach ($resultado as $login):
+            if($login['id'] == $pass && $login['nombre'] == $user){
+                header('Location: tablas.php?id='.$login['id'].'&nombre='.$login['nombre'].' ');
+            }
+        endforeach;
+        // header('Location: agregarEmpleado.php');
+
+    } else {
+        echo '<script> alert("Los campos estan vacios")</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,7 +59,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Iniciar sesion</h1>
                                     </div>
-                                    <form class="user" method="GET" action="validarLogin.php">
+                                    <form class="user" method="POST" action="">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="username" placeholder="Usuario" name="user">

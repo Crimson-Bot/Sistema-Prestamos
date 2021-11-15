@@ -1,32 +1,19 @@
-<?php global $nombreUsuario, $idUsuario, $tipoUsuario, $sexoUsuario, $fotoUsuario, $salarioUsuario;
-global $contTemp;
-$contTemp = 0;
-$idUsuario = $_GET['id'];
-if ($idUsuario != 0) {
-    $ruta = "credenciales.txt";
-    if (file_exists($ruta)) {
-        $leer = fopen("credenciales.txt", "r");
-        while (!feof($leer)) {
-            $claveid = fgets($leer);
-            $nombre = fgets($leer);
-            $tipo = fgets($leer);
-            $sexo = fgets($leer);
-            $foto = fgets($leer);
-            $salario = fgets($leer);
-            if ($idUsuario == $claveid) {
-                $nombreUsuario = $nombre;
-                $tipoUsuario = $tipo;
-                $sexoUsuario = $sexo;
-                $fotoUsuario = $foto;
-                $salarioUsuario = $salario;
-            }
-        }
-        fclose($leer);
-    }
-} else {
-    $nombreUsuario = "";
-    $idUsuario = "";
-}
+<?php global $nombreUsuario, $idUsuario;
+
+include_once 'conexion.php';
+// $idUsuario = $_GET['id'];
+// $nombreUsuario = $_GET['nombre'];
+$idUsuario = 2;
+$nombreUsuario = "Luisa";
+
+$sentencia_select = $con->prepare('SELECT * FROM prestamos ORDER BY id ASC');
+$sentencia_select->execute();
+$prestamos = $sentencia_select->fetchAll();
+
+$sentencia_pagos = $con->prepare('SELECT * FROM pagos ORDER BY id ASC');
+$sentencia_pagos->execute();
+$pagos = $sentencia_pagos->fetchAll();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -72,33 +59,14 @@ if ($idUsuario != 0) {
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="<?php echo "dashboardEmpleado.php?id=" . $idUsuario . " " ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menu</span></a>
-            </li>
-
-
-
-
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tablas</span></a>
-            </li>
-
-            <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Log out</span></a>
             </li>
 
-
-
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
 
         </ul>
@@ -183,89 +151,46 @@ if ($idUsuario != 0) {
                     <h1>Reporte de prestamo</h1>
                     <!-- Colocar tabla aquí -->
 
+                    <?php global $idTabla, $nombreTabla, $cantidadTabla, $plazoTabla, $quincenasRestantes, $montoRestante; ?>
+                    <?php foreach ($prestamos as $fila): 
+                        $idTabla = $fila['id'];
+                        $nombreTabla = $fila['nombre'];
+                        $cantidadTabla = $fila['cantidad'];
+                        $plazoTabla = $fila['plazo'];
+                    endforeach?>
+
+                    
+
+                    <table class="table">
+                    <tr class="head">
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Monto Total</th>
+                        <th scope="col">Quincenas Totales</th>
+                        <th scope="col">Monto Restante</th>
+                        <th scope="col">Quincenas Restantes</th>
+                    </tr>
+                    <?php $quincenasRestantes = $plazoTabla; ?>
+                    <?php foreach ($pagos as $fila2): ?>
+                    <tr>
+                        <td><?php echo $idTabla;?></td>
+            
+                        <td><?php echo $nombreTabla;?></td>
+
+                        <td><?php echo $cantidadTabla;?></td>
+
+                        <td><?php echo $plazoTabla;?></td>
+
+                        <td><?php echo $montoRestante = $cantidadTabla - $fila2['abono'];?></td>
+
+                        <td><?php echo $quincenasRestantes -=  1;?></td>
+
+                    </tr>
+                    <?php endforeach?>
+
+                    </table>
                     <!-- Abrir archivo de deudas aquí -->
-<?php
-echo "<table border class='table'> <tr>
-<th scope='col'>ID</th>
-<th scope='col'>Nombre</th>
-<th scope='col'>Quincenas Totales</th>
-<th scope='col'>Monto Total</th>
-  </tr>
-  <tbody>";
-$mostrar = fopen('prestamos.txt', 'r');
-global $totalPrestamo, $totalQuincenas;
-$totalPrestamo = $totalPrestamo - 1;
-while (!feof($mostrar)) {
-    $id = fgets($mostrar);
-    if ($id == $idUsuario) {
-        $nombre = fgets($mostrar);
-        $totalPrestamo = fgets($mostrar);
-        $totalQuincenas = fgets($mostrar);
-    }
-}
-fclose($mostrar);
-// tabla 2
-$mostrar2 = fopen('pagos.txt', 'r');
-global $restaPrestamos, $restaQuincenas, $temp;
-$temp = $totalQuincenas;
-$restaQuincenas = $totalQuincenas;
-while (!feof($mostrar2)) {
-    $id = fgets($mostrar2);
-    if ($id == $idUsuario) {
 
-        $nombre = fgets($mostrar2);
-        $restaPrestamos = fgets($mostrar2);
-        $totalPrestamo = $totalPrestamo - $restaPrestamos;
-        $restaQuincenas = $restaQuincenas - 1;
-        if ($restaQuincenas < 0) {
-            echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . 'RETRASO' . "</td></tr>";
-        } else {
-
-            echo "<tr><td>" . $id . "</td><td>" . $nombre . "</td><td>" . $totalPrestamo . "</td><td>" . $restaQuincenas . "</td></tr>";
-        }
-
-    }
-}
-fclose($mostrar2);
-echo "</tbody></table>";
-if ($totalPrestamo == 0) {
-    // Eliminar prestamo aquí
-    $leer = fopen("pagos.txt", "r");
-    $escribir = fopen("temporal.txt", "a+");
-    $validar = fopen("prestamos.txt", "r");
-    $barrido = fopen("temp.txt", "a+");
-    // prestamos
-    while (!feof($validar)) {
-        $idP = fgets($validar);
-        $nombreP = fgets($validar);
-        $montoP = fgets($validar);
-        if ($idUsuario != $idP) {
-            fputs($barrido, $idClaveP);
-            fputs($barrido, $nombreClaveP);
-            fputs($barrido, $montoP);
-        }
-    }
-    // pagos
-    while (!feof($leer)) {
-        $idClave = fgets($leer);
-        $nombreClave = fgets($leer);
-        $monto = fgets($leer);
-        if ($idUsuario != $idClave) {
-            fputs($escribir, $idClave);
-            fputs($escribir, $nombreClave);
-            fputs($escribir, $monto);
-        }
-    }
-    fclose($leer);
-    fclose($escribir);
-    fclose($validar);
-    fclose($barrido);
-    if (rename("temporal.txt", "pagos.txt") && rename("temp.txt", "prestamos.txt")) {
-        echo "<script>alert('Datos Eliminados Exitosamente!!!');</script>";
-        echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php '>";
-    }
-}
-?>
 
                 <div class="container-fluid" id="i">
 
@@ -333,7 +258,7 @@ if ($totalPrestamo == 0) {
                     </div>
 
                     <div class="modal-body">
-                    <form action="solicitarPrestamo.php" method="GET" >
+                    <form action="solicitarPrestamo.php" method="POST" >
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Id del usuario</label>
 
@@ -372,7 +297,7 @@ if ($totalPrestamo == 0) {
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <input type="submit" class="btn btn-success" value="Guardar" >
+                        <input type="submit" name="guardar" class="btn btn-success" value="Guardar" >
                     </div>
                     </form>
                     </div>

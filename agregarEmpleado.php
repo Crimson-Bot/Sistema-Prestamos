@@ -1,3 +1,32 @@
+<?php
+include_once 'conexion.php';
+if (isset($_POST['guardar'])) {
+    $nombre = $_POST['nombre'];
+    $tipo = $_POST['tipo'];
+    $sexo = $_POST['sexo'];
+    $foto = $_POST['foto'];
+    $salario = $_POST['salario'];
+
+    if (!empty($nombre) && !empty($tipo) && !empty($sexo) && !empty($foto) && !empty($salario)) {
+
+        
+        $consulta_insert = $con->prepare('INSERT INTO empleados(nombre,tipo,sexo,foto,salario) VALUES(:nombre,:tipo,:sexo,:foto,:salario)');
+        $consulta_insert->execute(array(
+            ':nombre' => $nombre,
+            ':tipo' => $tipo,
+            ':sexo' => $sexo,
+            ':foto' => $foto,
+            ':salario' => $salario,
+        ));
+        echo '<script> alert("Usuario agregado")</script>';
+        header('Location: agregarEmpleado.php');
+
+    } else {
+        echo '<script> alert("Los campos estan vacios")</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -30,7 +59,7 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -40,16 +69,8 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="dasboardAdmin.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menu</span></a>
-            </li>
-
-
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Agregar Empleado</span></a>
@@ -60,11 +81,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="charts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <img src="https://img.icons8.com/color/48/000000/graph.png"/>
+                    <!-- <img src="https://img.icons8.com/color/48/000000/graph.png"/> -->
                     <span>Graficas</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tablasAdmin.php">
@@ -72,13 +92,12 @@
                     <span>Tablas</span></a>
             </li>
 
-            <li class="nav-item active">
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Log out</span></a>
             </li>
-
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -134,12 +153,12 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
                                 <img class="img-profile rounded-circle"
                                     src="./imagenes/1.png">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -158,7 +177,7 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
-                            </div>
+                            </div> -->
                         </li>
 
                     </ul>
@@ -175,41 +194,50 @@
                     </div>
 
 
-                    <form class="user" action="datosEmpleados.php" method="GET">
+                    <form class="user" action="" method="POST">
                         <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
+                            <!-- <div class="col-sm-6 mb-3 mb-sm-0">
                                 <input type="text" class="form-control form-control-user" name="id"
                                     placeholder="ID">
-                            </div>
+                            </div> -->
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control form-control-user" name="nombre"
                                     placeholder="Nombre empleado">
                             </div>
+
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" name="tipo"
+                                    placeholder="Tipo de empleado">
+                            </div>
+                            
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" class="form-control form-control-user" name="tipoEmpleado"
-                                    placeholder="Tipo de empleado">
-                            </div>
                             <div class="col-sm-6">
                                 <input type="text" class="form-control form-control-user" name="sexo"
                                     placeholder="Sexo">
                             </div>
-                        </div>
 
-                        <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <input type="text" class="form-control form-control-user"
-                                    name="foto" placeholder="foto">
+                                    name="foto" placeholder="Fotografía">
                             </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control form-control-user"
-                                    name="salario" placeholder="salario">
-                            </div>
+
                         </div>
-                        <input type="submit" value="Registrar Empleado" class="btn btn-primary btn-user btn-block">
+
+                        <!-- <div class="form-group row">
+                            
+                            
+                        </div> -->
+                        <center>
+                        <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-user"
+                                    name="salario" placeholder="Salario">
+                            </div>
+                        </center>
+                        <br>
+                        <input type="submit" name="guardar" value="Registrar Empleado" class="btn btn-primary btn-user btn-block">
 
                     </form>
                 </div>

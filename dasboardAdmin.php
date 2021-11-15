@@ -30,10 +30,10 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+         <!-- Sidebar -->
+         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -42,14 +42,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menu</span></a>
-            </li>
-
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
@@ -63,9 +55,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="charts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <img src="https://img.icons8.com/color/48/000000/graph.png"/>
+                    <!-- <img src="https://img.icons8.com/color/48/000000/graph.png"/> -->
                     <span>Graficas</span></a>
-
             </li>
 
             <!-- Nav Item - Tables -->
@@ -75,112 +66,12 @@
                     <span>Tablas</span></a>
             </li>
 
-
-
-                        <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEmpleado"> Eliminar usuario
-                        </button>
             </li>
-
             <li class="nav-item">
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar"> Editar Usuario
-                        </button>
-            </li>
-
-            <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Log out</span></a>
             </li>
-
-
-                            <!-- Inicio del modal ELIMINAR DATOS -->
-                            <div class="modal fade" id="eliminarEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Eliminar empleado</h5>
-                        <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">X</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Empiezo de formulario -->
-                        <form method="GET" action="eliminarEmpleados.php">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">ID/Contraseña:</label>
-                                <input type="text" class="form-control" name="idEliminado" id="idEliminado" placeholder="ID/Contraseña" required>
-                            </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <input type="submit" class="btn btn-danger" value="Eliminar">
-                    </div>
-                    </div>
-                    </form>
-                </div>
-                </div>
-                <!-- Fin del modal para editar datos-->
-
-                 <!-- Inicio del modal EDITAR DATOS -->
-                 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edición de datos</h5>
-                        <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">X</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- fORMULARIO  EDITAR DATOS-->
-                        <form method="GET" action="editarEmpleados.php">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">ID/Contraseña:</label>
-                                <input type="text" class="form-control" name="idEditado" id="idEditado" placeholder="ID/Contraseña" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                <input type="text" class="form-control" name="nombreEditado" id="nombreEditar" placeholder="Nombre" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Tipo de empleado:</label>
-                                <input type="text" class="form-control" name="tipoEditado" id="tipoEditado" placeholder="Tipo de empleado" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Sexo:</label>
-                                <input type="text" class="form-control" name="sexoEditado" id="sexoEditado" placeholder="Sexo del empleado" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Foto:</label>
-                                <input type="text" class="form-control" name="fotoEditado" id="fotoEditado" placeholder="Url"required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Salario:</label>
-                                <input type="text" class="form-control" name="salarioEditado" id="salarioEditado" placeholder="Salario"required>
-                            </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <input type="submit" class="btn btn-success" value="Guardar">
-                    </div>
-                    </div>
-                    </form>
-                </div>
-                </div>
-                <!-- Fin del modal para editar datos-->
-
-
-
-                                <!--  Librerias para model-->
-
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
