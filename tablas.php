@@ -1,16 +1,16 @@
 <?php global $nombreUsuario, $idUsuario;
 
 include_once 'conexion.php';
-// $idUsuario = $_GET['id'];
-// $nombreUsuario = $_GET['nombre'];
-$idUsuario = 2;
-$nombreUsuario = "Luisa";
+$idUsuario = $_GET['id'];
+$nombreUsuario = $_GET['nombre'];
+// $idUsuario = 2;
+// $nombreUsuario = "Luisa";
 
-$sentencia_select = $con->prepare('SELECT * FROM prestamos ORDER BY id ASC');
+$sentencia_select = $con->prepare('SELECT * FROM prestamos WHERE id = '.$idUsuario.' ');
 $sentencia_select->execute();
 $prestamos = $sentencia_select->fetchAll();
 
-$sentencia_pagos = $con->prepare('SELECT * FROM pagos ORDER BY id ASC');
+$sentencia_pagos = $con->prepare('SELECT * FROM pagos WHERE id = '.$idUsuario.' ');
 $sentencia_pagos->execute();
 $pagos = $sentencia_pagos->fetchAll();
 
@@ -157,6 +157,8 @@ $pagos = $sentencia_pagos->fetchAll();
                         $nombreTabla = $fila['nombre'];
                         $cantidadTabla = $fila['cantidad'];
                         $plazoTabla = $fila['plazo'];
+
+                        echo "Status: Prestamo Pendiente de $" . $cantidadTabla;
                     endforeach?>
 
                     
@@ -170,7 +172,9 @@ $pagos = $sentencia_pagos->fetchAll();
                         <th scope="col">Monto Restante</th>
                         <th scope="col">Quincenas Restantes</th>
                     </tr>
-                    <?php $quincenasRestantes = $plazoTabla; ?>
+                    <?php $quincenasRestantes = $plazoTabla; 
+                    $montoRestante = $cantidadTabla;
+                    ?>
                     <?php foreach ($pagos as $fila2): ?>
                     <tr>
                         <td><?php echo $idTabla;?></td>
@@ -181,10 +185,31 @@ $pagos = $sentencia_pagos->fetchAll();
 
                         <td><?php echo $plazoTabla;?></td>
 
-                        <td><?php echo $montoRestante = $cantidadTabla - $fila2['abono'];?></td>
+                        <td><?php echo $montoRestante -= $fila2['abono'];?></td>
 
-                        <td><?php echo $quincenasRestantes -=  1;?></td>
+                        <?php $quincenasRestantes -=  1; ?>
 
+                        <?php if ($quincenasRestantes < 0){
+                            echo "<td> Retraso </td>"; 
+                        } else { 
+                            echo "<td> $quincenasRestantes </td>";
+                        }?>
+
+                        
+                        <!-- aquí va la validación -->
+                        <?php if ($montoRestante <= 0){
+                            include_once 'conexion.php';
+                                $delete=$con->prepare('DELETE FROM prestamos WHERE id=:id');
+                                $delete->execute(array(
+                                    ':id'=>$idUsuario
+                                ));
+                                $delete2=$con->prepare('DELETE FROM pagos WHERE id=:id');
+                                $delete2->execute(array(
+                                    ':id'=>$idUsuario
+                                ));
+                                // echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
+                                header('Location: index.php ');
+                        } ?>
                     </tr>
                     <?php endforeach?>
 

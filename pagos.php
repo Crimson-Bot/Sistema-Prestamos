@@ -11,7 +11,7 @@ $consulta_insert = $con->prepare('INSERT INTO pagos(id,nombre,abono) VALUES(:id,
             ':nombre' => $nombreUsuario,
             ':abono' => $abonoPago,
         ));
-        header('Location: tablas.php');
+        header('Location: tablas.php?id='.$idUsuario.'&nombre='.$nombreUsuario.' ');
 
 // Leer el archivo que se guardo pagos.
 // Crear un nuevo archivo llamado que es un conjunto de pagos y de prestamos "reporte"

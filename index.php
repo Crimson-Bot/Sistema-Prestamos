@@ -1,27 +1,3 @@
-<?php
-session_start();
-include_once 'conexion.php';
-if (isset($_POST['guardar'])) {
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
-
-    if (!empty($user) && !empty($pass)) {
-        $sentencia_select = $con->prepare('SELECT * FROM empleados ORDER BY id ASC');
-        $sentencia_select->execute();
-        $resultado = $sentencia_select->fetchAll();
-        foreach ($resultado as $login):
-            if($login['id'] == $pass && $login['nombre'] == $user){
-                header('Location: tablas.php?id='.$login['id'].'&nombre='.$login['nombre'].' ');
-            }
-        endforeach;
-        // header('Location: agregarEmpleado.php');
-
-    } else {
-        echo '<script> alert("Los campos estan vacios")</script>';
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -59,16 +35,16 @@ if (isset($_POST['guardar'])) {
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Iniciar sesion</h1>
                                     </div>
-                                    <form class="user" method="POST" action="">
+                                    <form action="validar.php" method="POST" >
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="username" placeholder="Usuario" name="user">
+                                                id="user" placeholder="Usuario" name="user">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Contraseña" name="pass">
+                                                id="pass" placeholder="Contraseña" name="pass">
                                         </div>
-                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Iniciar Sesión">
+                                        <input type="submit" name="guardar" class="btn btn-primary btn-user btn-block" value="Iniciar Sesión">
                                     </form>
                                 </div>
                             </div>

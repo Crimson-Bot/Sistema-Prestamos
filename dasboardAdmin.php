@@ -169,13 +169,14 @@
 date_default_timezone_set('America/Mexico_City');
 $DateAndTime = date('m-d-Y h:i:s a', time());
 echo "<h2>" . $DateAndTime . "</h2>";
+
 ?>
                     </div>
 
-                    <img aling="center" src="./imagenes/2.png" alt="">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-                    </div>
+                    
+                    <center>
+                    <img src="./imagenes/2.png" height="350" width="350">
+                    </center>
                 </div>
                 <!-- /.container-fluid -->
 

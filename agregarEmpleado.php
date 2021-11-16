@@ -196,11 +196,6 @@ if (isset($_POST['guardar'])) {
 
                     <form class="user" action="" method="POST">
                         <div class="form-group row">
-                            <!-- <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" class="form-control form-control-user" name="id"
-                                    placeholder="ID">
-                            </div> -->
-
                             <div class="col-sm-6">
                                 <input type="text" class="form-control form-control-user" name="nombre"
                                     placeholder="Nombre empleado">
@@ -223,7 +218,6 @@ if (isset($_POST['guardar'])) {
                                 <input type="text" class="form-control form-control-user"
                                     name="foto" placeholder="Fotografía">
                             </div>
-
                         </div>
 
                         <!-- <div class="form-group row">

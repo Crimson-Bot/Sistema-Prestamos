@@ -23,7 +23,7 @@ include_once 'conexion.php';
             ':plazo' => $plazo,
             ':fecha' => $dateAndTime,
         ));
-        header('Location: tablas.php');
+        header('Location: tablas.php?id='.$id.'&nombre='.$nombre.' ');
     
     // $consulta_insert = $con->prepare('INSERT INTO prestamos(id,nombre,cantidad,plazo,fecha) VALUES(:id,:nombre,:cantidad,:plazo,:fecha)');
     //     $consulta_insert->execute(array(
