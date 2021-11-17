@@ -1,8 +1,8 @@
 <?php global $nombreUsuario, $idUsuario;
 
 include_once 'conexion.php';
-$idUsuario = $_GET['id'];
-$nombreUsuario = $_GET['nombre'];
+$idUsuario = $_POST['id'];
+$nombreUsuario = $_POST['nombre'];
 // $idUsuario = 2;
 // $nombreUsuario = "Luisa";
 
@@ -13,6 +13,10 @@ $prestamos = $sentencia_select->fetchAll();
 $sentencia_pagos = $con->prepare('SELECT * FROM pagos WHERE id = '.$idUsuario.' ');
 $sentencia_pagos->execute();
 $pagos = $sentencia_pagos->fetchAll();
+
+if(empty($idUsuario)){
+    header('Location: index.php');
+}
 
 ?>
 <!DOCTYPE html>
@@ -207,8 +211,8 @@ $pagos = $sentencia_pagos->fetchAll();
                                 $delete2->execute(array(
                                     ':id'=>$idUsuario
                                 ));
-                                // echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
-                                header('Location: index.php ');
+                                echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
+                                // header('Location: index.php ');
                         } ?>
                     </tr>
                     <?php endforeach?>

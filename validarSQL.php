@@ -14,10 +14,21 @@ $query = mysqli_query($conexion,"SELECT * FROM empleados WHERE id = '".$contrase
 $nr = mysqli_num_rows($query);
 
 if($nr == 1){
-    header('Location: tablas.php?id='.$contrasenia.'&nombre='.$usuario.' ');
+    // header('Location: tablas.php?id='.$contrasenia.'&nombre='.$usuario.' ');
+    echo '<form method="POST" action="tablas.php">';
+    echo '<input type="text" id="id" value='.$contrasenia.' name="id" readonly hidden>';
+    echo '<input type="text" id="nombre" value='.$usuario.' name="nombre" readonly hidden>';
+    echo '<input type="submit" id="guardar"  name="guardar" hidden>'; ?>
+    <script type="text/javascript"> document.getElementById('guardar').click(); </script>
+    
+    <?php echo '</form>';
+    // echo '<script> document.getElementById("guardar").submit(); // SUBMIT FORM </script>';
+
 }else if ($nr == 0){
     session_destroy();
     echo '<script> alert("El Usuario que ingreso no existe")</script>';
     // header('Location: index.php');
     // header('Location: tablas.php?id='.$pass.'&nombre='.$user.' ');
 }
+
+

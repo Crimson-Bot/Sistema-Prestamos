@@ -11,8 +11,14 @@ $consulta_insert = $con->prepare('INSERT INTO pagos(id,nombre,abono) VALUES(:id,
             ':nombre' => $nombreUsuario,
             ':abono' => $abonoPago,
         ));
-        header('Location: tablas.php?id='.$idUsuario.'&nombre='.$nombreUsuario.' ');
-
+        // header('Location: tablas.php?id='.$idUsuario.'&nombre='.$nombreUsuario.' ');
+        echo '<form method="POST" action="tablas.php">';
+        echo '<input type="text" id="id" value='.$idUsuario.' name="id" readonly hidden>';
+        echo '<input type="text" id="nombre" value='.$nombreUsuario.' name="nombre" readonly hidden>';
+        echo '<input type="submit" id="guardar"  name="guardar" hidden>'; ?>
+        <script type="text/javascript"> document.getElementById('guardar').click(); </script>
+        
+        <?php echo '</form>';
 // Leer el archivo que se guardo pagos.
 // Crear un nuevo archivo llamado que es un conjunto de pagos y de prestamos "reporte"
 // En este archivo se guardaran el
