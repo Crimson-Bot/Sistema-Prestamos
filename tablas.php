@@ -211,8 +211,14 @@ if(empty($idUsuario)){
                                 $delete2->execute(array(
                                     ':id'=>$idUsuario
                                 ));
-                                echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
-                                // header('Location: index.php ');
+                                // echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
+                                echo '<script> alert("Prestamo pagado... Gracias!!!")</script>';
+                                echo '<form method="POST" action="tablas.php">';
+                                echo '<input type="text" id="id" value="'.$idUsuario.'" name="id" readonly hidden>';
+                                echo '<input type="text" id="nombre" value="'.$nombreUsuario.'" name="nombre" readonly hidden>';
+                                echo '<input type="submit" id="save" name="save" hidden>'; ?>
+                                <script type="text/javascript"> document.getElementById('save').click(); </script>
+                                <?php echo '</form>';
                         } ?>
                     </tr>
                     <?php endforeach?>
@@ -304,7 +310,7 @@ if(empty($idUsuario)){
                                 <label for="recipient-name" class="col-form-label">Cantidad del Prestamo</label>
                                 <div class="prestamo">
                                 <input type="num" class="form-control" name="cantidadPrestamo" id="cantidadSolicitarPrestamo" placeholder="Cantidad" required autocomplete="off">
-                                <button id="btnBuscar" class="bnt btn-info">Validar</button>
+                                <!-- <button id="btnBuscar" class="bnt btn-info">Validar</button> -->
                                 </div>
                             </div>
 

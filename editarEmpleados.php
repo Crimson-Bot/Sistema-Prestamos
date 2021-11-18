@@ -1,7 +1,15 @@
 <?php
 include_once 'conexion.php';
-if(isset($_GET['id'])){
-    $id=(int) $_GET['id'];
+
+$idAd = $_POST['idAd'];
+
+if(empty($idAd)){
+    header('Location: index.php');
+}
+
+
+if(isset($_POST['id'])){
+    $id=(int) $_POST['id'];
 
     $buscar_id=$con->prepare('SELECT * FROM empleados WHERE id=:id LIMIT 1');
     $buscar_id->execute(array(
@@ -9,38 +17,9 @@ if(isset($_GET['id'])){
     ));
     $resultado=$buscar_id->fetch();
 }else{
-    header('Location: tablasAdmin.php');
+    header('Location: index.php');
 }
-
-if(isset($_POST['guardar'])){
-    $nombre=$_POST['nombre'];
-    $tipo=$_POST['tipo'];
-    $sexo=$_POST['sexo'];
-    $foto=$_POST['foto'];
-    $salario=$_POST['salario'];
-
-    if(!empty($nombre) && !empty($tipo) && !empty($sexo) && !empty($foto) && !empty($salario)){
-        
-            $consulta_update=$con->prepare('UPDATE empleados set 
-            nombre =:nombre,
-            tipo=:tipo,
-            sexo=:sexo,
-            foto=:foto,
-            salario=:salario WHERE id=:id');
-            $consulta_update->execute(array(
-                ':nombre' => $nombre,
-                ':tipo' => $tipo,
-                ':sexo' => $sexo,
-                ':foto' => $foto,
-                ':salario' => $salario,
-                ':id'=> $id
-            ));
-            header('Location: tablasAdmin.php');
-
-    }else{
-        echo '<script> alert("Los campos estan vacios")</script>';
-    }
-}
+// aqui deberian ir el otro codigo 
 ?>
 
 <!DOCTYPE html>
@@ -78,44 +57,49 @@ if(isset($_POST['guardar'])){
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Inicio</div>
-            </a>
+            <li>
+                <center>
+                    <form action="dasboardAdmin.php" method="POST">
+                        <input type="text" id="id" value="-1" name="id" readonly hidden>
+                        <input type="submit" class="sidebar-brand d-flex align-items-center justify-content-center" value="INICIO" style="background-color:transparent;border:none" id="empleados">
+                    </form>
+                </center>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - Agregar -->
             <li class="nav-item">
-                <a class="nav-link" href="agregarEmpleado.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Agregar Empleado</span></a>
+                <form action="agregarEmpleado.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Agregar Empleado" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <!-- <img src="https://img.icons8.com/color/48/000000/graph.png"/> -->
-                    <span>Graficas</span></a>
+                <form action="charts.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Graficas" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tablas</span></a>
+                <form action="tablasAdmin.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Tablas" style="background-color:transparent;border:none" id="empleados" disabled>
+                </form>
             </li>
 
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Log out</span></a>
+                <form action="index.php">
+                    <input type="submit" class="nav-link" value="Log Out" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             <!-- Divider -->
@@ -160,9 +144,12 @@ if(isset($_POST['guardar'])){
                     </div>
 
                     <div class="contenedor">
-                    <form action="" method="post">
+                    <form action="update.php" method="post">
                         <div class="form-group row">
                             <div class="col-sm-6">
+                                <!-- El id para pasarlo a update xd -->
+                                <input type="text" name="id" value="<?php if($resultado) echo $resultado['id'];?>" readonly hidden>
+                                <!-- El nombre -->
                                 <input type="text" name="nombre" value="<?php if($resultado) echo $resultado['nombre'];?>" class="form-control form-control-user">
                             </div>
                             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -186,7 +173,9 @@ if(isset($_POST['guardar'])){
                         <center>
                             <br>
                             <div class="btn__group">
-                                <a href="tablasAdmin.php" class ="btn btn-danger">Cancelar</a>
+                                <!-- <a href="index.php" class ="btn btn-danger">Cancelar</a> -->
+                                <!-- <input type="text" name="id" value="-1" readonly hidden> -->
+                                <input type="submit" name="cancelar" class="btn btn-danger" value="Cancelar">
                                 <input type="submit" name="guardar" value="Guardar" class="btn btn-success">
                             </div>
                         </center>

@@ -33,44 +33,47 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Inicio</div>
-            </a>
+            <li>
+                <center>
+                    <form action="dasboardAdmin.php" method="POST">
+                        <input type="text" id="id" value="-1" name="id" readonly hidden>
+                        <input type="submit" class="sidebar-brand d-flex align-items-center justify-content-center" value="INICIO" style="background-color:transparent;border:none" id="empleados">
+                    </form>
+                </center>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - Agregar -->
             <li class="nav-item">
-                <a class="nav-link" href="agregarEmpleado.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Agregar Empleado</span></a>
+                <form action="agregarEmpleado.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Agregar Empleado" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="charts.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <!-- <img src="https://img.icons8.com/color/48/000000/graph.png"/> -->
-                    <span>Graficas</span></a>
+                <form action="charts.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Graficas" style="background-color:transparent;border:none" id="empleados" disabled>
+                </form>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tablasAdmin.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tablas</span></a>
+                <form action="tablasAdmin.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Tablas" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Log out</span></a>
+                <form action="index.php">
+                    <input type="submit" class="nav-link" value="Log Out" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             <!-- Divider -->
@@ -81,78 +84,98 @@
         <!-- End of Sidebar -->
 
 <?php
-$contE = 0;
-$contF = 0;
-$contMar = 0;
-$contA = 0;
-$contMy = 0;
-$contJn = 0;
-$contJl = 0;
-$contAgos = 0;
-$contS = 0;
-$contO = 0;
-$contN = 0;
-$contD = 0;
-$mostrar = fopen('prestamos.txt', 'r');
-while (!feof($mostrar)) {
-    $id = fgets($mostrar);
-    $nombre = fgets($mostrar);
-    $prestamo = fgets($mostrar);
-    $quincena = fgets($mostrar);
-    $mes = fgets($mostrar);
-    if ($id = !"") {
-        if ($mes == 1) {
-            $contE++;
-        }
-        if ($mes == 2) {
-            $contF++;
-        }
-        if ($mes == 3) {
-            $contMar++;
-        }
-        if ($mes == 4) {
-            $contA++;
-        }
-        if ($mes == 5) {
-            $contMy++;
-        }
-        if ($mes == 6) {
-            $contJn++;
-        }
-        if ($mes == 7) {
-            $contJl++;
-        }
-        if ($mes == 8) {
-            $contAgos++;
-        }if ($mes == 9) {
-            $contS++;
-        }if ($mes == 10) {
-            $contO++;
-        }if ($mes == 11) {
-            $contN++;
-        }if ($mes == 12) {
-            $contD++;
-        }
-    }
-}
-fclose($mostrar);
-$arrayMeses = array($contE, $contF, $contMar, $contA, $contMy, $contJn, $contJl, $contAgos, $contS, $contO, $contN, $contD);
+    include("conexion.php");
 
-$dataPoints = array(
-    array("y" => $arrayMeses[0], "label" => "Enero"),
-    array("y" => $arrayMeses[1], "label" => "Febrero"),
-    array("y" => $arrayMeses[2], "label" => "Marzo"),
-    array("y" => $arrayMeses[3], "label" => "Abril"),
-    array("y" => $arrayMeses[4], "label" => "Mayo"),
-    array("y" => $arrayMeses[5], "label" => "Junio"),
-    array("y" => $arrayMeses[6], "label" => "Julio"),
-    array("y" => $arrayMeses[7], "label" => "Agosto"),
-    array("y" => $arrayMeses[8], "label" => "Septiembre"),
-    array("y" => $arrayMeses[9], "label" => "Octubre"),
-    array("y" => $arrayMeses[10], "label" => "Noviembre"),
-    array("y" => $arrayMeses[11], "label" => "Diciembre"),
-);
-
+    $enero = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=1;');
+    $febrero = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=2;');
+    $marzo = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=3;');
+    $abril = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=4;');
+    $mayo = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=5;');
+    $junio = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=6;');
+    $julio = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=7;');
+    $agosto = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=8;');
+    $septiembre = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=9;');
+    $octubre = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=10;');
+    $noviembre = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=11;');
+    $diciembre = $con -> prepare('SELECT COUNT(fecha) FROM `prestamos` WHERE MONTH(fecha)=12;');
+    
+    $enero->execute();
+    $febrero->execute();
+    $marzo->execute();
+    $abril->execute();
+    $mayo->execute();
+    $junio->execute();
+    $julio->execute();
+    $agosto->execute();
+    $septiembre->execute();
+    $octubre->execute();
+    $noviembre->execute();
+    $diciembre->execute();
+ 
+    $res1 = $enero->fetchAll();
+    $res2 = $febrero->fetchAll();
+    $res3 = $marzo->fetchAll();
+    $res4 = $abril->fetchAll();
+    $res5 = $mayo->fetchAll();
+    $res6 = $junio->fetchAll();
+    $res7 = $julio->fetchAll();
+    $res8 = $agosto->fetchAll();
+    $res9 = $septiembre->fetchAll();
+    $res10 = $octubre->fetchAll();
+    $res11 = $noviembre->fetchAll();
+    $res12 = $diciembre->fetchAll();
+ 
+    foreach ($res1 as $fila):
+        $cantidadEne = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res2 as $fila):
+        $cantidadFeb = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res3 as $fila):
+        $cantidadMar = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res4 as $fila):
+        $cantidadAbr = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res5 as $fila):
+        $cantidadMay = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res6 as $fila):
+        $cantidadJun = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res7 as $fila):
+        $cantidadJul = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res8 as $fila):
+        $cantidadAgos = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res9 as $fila):
+        $cantidadSep = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res10 as $fila):
+        $cantidadOctu = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res11 as $fila):
+        $cantidadNomb = $fila['COUNT(fecha)'];
+    endforeach;
+    foreach ($res12 as $fila):
+        $cantidadDic = $fila['COUNT(fecha)'];
+    endforeach;
+ 
+    $dataPoints = array( 
+        array("y" => $cantidadEne, "label" => "Enero" ),
+        array("y" => $cantidadFeb, "label" => "Febrero" ),
+        array("y" => $cantidadMar, "label" => "Marzo" ),
+        array("y" => $cantidadAbr, "label" => "Abril" ),
+        array("y" => $cantidadMay, "label" => "Mayo" ),
+        array("y" => $cantidadJun, "label" => "Junio" ),
+        array("y" => $cantidadJul, "label" => "Julio" ),
+        array("y" => $cantidadAgos, "label" => "Agosto" ),
+        array("y" => $cantidadSep, "label" => "Septiembre" ),
+        array("y" => $cantidadOctu, "label" => "Octubre" ),
+        array("y" => $cantidadNomb, "label" => "Noviembre" ),
+        array("y" => $cantidadDic, "label" => "Diciembre" )
+    );
 ?>
 <!DOCTYPE html>
 <html lang="es">

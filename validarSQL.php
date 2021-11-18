@@ -27,8 +27,7 @@ if($nr == 1){
 }else if ($nr == 0){
     session_destroy();
     echo '<script> alert("El Usuario que ingreso no existe")</script>';
-    // header('Location: index.php');
-    // header('Location: tablas.php?id='.$pass.'&nombre='.$user.' ');
+    echo "<META HTTP-EQUIV='Refresh' CONTENT='0; url=index.php'>";
 }
 
 

@@ -1,3 +1,12 @@
+<?php
+$id = $_POST['id'];
+
+if(empty($id)){
+    header('Location: index.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,44 +42,54 @@
          <!-- Sidebar -->
          <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
+            <li>
+                <center>
+                    <form action="dasboardAdmin.php" method="POST">
+                        <input type="text" id="id" value="-1" name="id" readonly hidden>
+                        <input type="submit" class="sidebar-brand d-flex align-items-center justify-content-center" value="INICIO" style="background-color:transparent;border:none" id="empleados">
+                    </form>
+                </center>
+            </li>
+            <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dasboardAdmin.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Inicio</div>
-            </a>
+            </a> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="agregarEmpleado.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Agregar Empleado</span></a>
+                <form action="agregarEmpleado.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Agregar Empleado" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <!-- <img src="https://img.icons8.com/color/48/000000/graph.png"/> -->
-                    <span>Graficas</span></a>
+                <form action="charts.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Graficas" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tablasAdmin.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tablas</span></a>
+                <form action="tablasAdmin.php" method="POST">
+                    <input type="text" id="id" value="-1" name="id" readonly hidden>
+                    <input type="submit" class="nav-link" value="Tablas" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Log out</span></a>
+                <form action="index.php">
+                    <input type="submit" class="nav-link" value="Log Out" style="background-color:transparent;border:none" id="empleados">
+                </form>
             </li>
 
             <!-- Divider -->
@@ -127,7 +146,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
                                 <img class="img-profile rounded-circle"
                                     src="./imagenes/1.png">
                             </a>
